@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import getJokes from "./services/getJokes";
+import Card from "./components/Card";
 
 function App() {
+  const [joke, setJoke] = useState([]);
+
+  function NextButton() {
+    getJokes().then((res) => setJoke(res));
+  }
+
+  useEffect(() => {
+    getJokes().then((res) => setJoke(res));
+  }, []);
+
+  const value = joke.value;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Card value={value} nextButton={NextButton} />
+    </>
   );
 }
 
